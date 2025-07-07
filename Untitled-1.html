@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Túi Mù - Tạp hóa Năm Thặng</title>
+ <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 130px;
+    background-image: url('https://sb.tinhte.vn/2021/12/5796286_Screen_Shot_2021-12-28_at_16.42.03.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    user-select: none;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .header h1 {
+    font-size: 30px;
+    margin: 0;
+    padding: 12px 40px;
+    margin-bottom: 8px;
+    background-color: #b3e5fc;
+    color: #000;
+    border-radius: 60px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+  }
+
+  .combo-list,
+  .combo-sub-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .combo-card {
+    width: 280px;
+    height: 280px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  }
+
+  .combo-card:hover {
+    transform: translateY(-12px) scale(1.07);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  .combo-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .combo-card h3 {
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  .info-box {
+    width: 95%;
+    max-width: 900px;
+    margin: 10px auto 30px;
+    background-color: #ffffffcc;
+    border-radius: 50px;
+    padding: 65px;
+    font-size: 16px;
+    line-height: 1.6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .back-button {
+    margin: 30px auto 50px;
+    background-color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    font-size: 18px;
+    width: fit-content;
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .combo-card {
+      width: 90%;
+      height: auto;
+    }
+
+    .combo-card img {
+      height: 160px;
+    }
+  }
+
+  /* Combo phụ ở trang 2: hiệu ứng bay vào + hiệu ứng hover giống trang 1 */
+  #subCombos .combo-card,
+  .combo-sub-list .combo-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: flyIn 0.5s ease forwards;
+    animation-delay: var(--delay, 0s);
+    transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  }
+
+  #subCombos .combo-card:hover,
+  .combo-sub-list .combo-card:hover {
+    transform: translateY(-12px) scale(1.07);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    
+  }
+
+  @keyframes flyIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header h1.animate-drop {
+    animation: dropIn 0.8s ease-out;
+  }
+
+  @keyframes dropIn {
+    0% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* Hiệu ứng xuất hiện bay lên từng ô */
+#subCombos .combo-card,
+.combo-sub-list .combo-card {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: flyIn 0.5s ease forwards;
+  animation-delay: var(--delay, 0s);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover nhô cao và to ra */
+#subCombos .combo-card:hover,
+.combo-sub-list .combo-card:hover {
+  transform: translateY(-12px) scale(1.06);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+/* Định nghĩa animation */
+@keyframes flyIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 600px) {
+  /* Áp dụng cho combo trang đầu */
+  .combo-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .combo-list .combo-card {
+    width: 45%; /* mỗi hàng 2 ô */
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  .combo-list .combo-card img {
+    height: 140px;
+  }
+
+  /* Áp dụng cho combo phụ (trang 2) */
+  .combo-sub-list,
+  #subCombos {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .combo-sub-list .combo-card,
+  #subCombos .combo-card {
+    width: 45%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  .combo-sub-list .combo-card img,
+  #subCombos .combo-card img {
+    height: 140px;
+  }
+}
+
+</style>
+
+<style>
+  /* Thêm vào cuối phần <style> của bạn */
+  .hidden-section {
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+  }
+  .combo-card.active-center {
+  transform: scale(1.07);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+.zalo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background-color: #ffffffdd;
+  padding: 12px 20px;
+  border-radius: 20px;
+  max-width: 520px;
+  margin: 10px auto 0;
+    margin: 4px auto 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  flex-wrap: wrap;
+}
+
+.zalo-text {
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.zalo-qr {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+}
+
+</style>
+<script>
+  document.addEventListener("contextmenu", e => e.preventDefault());
+  document.addEventListener("keydown", function(e) {
+    if ((e.ctrlKey && e.key === 'c') ||
+        (e.ctrlKey && e.key === 'u') ||
+        (e.ctrlKey && e.key === 's') ||
+        (e.key === 'F12')) {
+      e.preventDefault();
+    }
+  });
+
+  window.addEventListener('popstate', function () {
+    goBack();
+  });
+
+  function showSubCombos(comboId) {
+    sessionStorage.setItem("scrollY", window.scrollY);
+    document.getElementById('comboList').classList.add('hidden-section');
+    document.getElementById('zaloInfo').style.display = 'none';
+
+    document.getElementById('subComboSection').style.display = 'block';
+    document.getElementById('backBtn').style.display = 'block';
+    window.scrollTo(0, 0);
+
+    const title = document.querySelector('.header h1');
+    title.classList.remove('animate-drop');
+    void title.offsetWidth;
+    title.classList.add('animate-drop');
+
+    history.pushState({ page: "subCombos" }, "", `#combo${comboId}`);
+
+    const predefined = document.getElementById(`testCombo${comboId}`);
+    const container = document.getElementById('subCombos');
+
+    if (predefined) {
+      const customList = predefined.querySelector('.combo-sub-list');
+      container.innerHTML = '';
+
+      const items = customList.querySelectorAll('.combo-card');
+      items.forEach((item, index) => {
+        const clone = item.cloneNode(true);
+        clone.style.setProperty('--delay', `${(index + 1) * 0.05}s`);
+        container.appendChild(clone);
+      });
+
+      const infoBox = predefined.querySelector('.info-box');
+      document.getElementById('infoBox').innerHTML = infoBox
+        ? infoBox.innerHTML
+        : `Thông tin về Combo #${comboId}.`;
+
+      return;
+    }
+
+    const comboCards = document.querySelectorAll('.combo-card');
+    let comboName = `Combo Bí Ẩn #${comboId}`;
+    comboCards.forEach(card => {
+      if (card.onclick?.toString().includes(`showSubCombos(${comboId})`)) {
+        const h3 = card.querySelector('h3');
+        if (h3) comboName = h3.textContent.trim();
+      }
+    });
+
+    const info = document.getElementById('infoBox');
+    info.innerText = `Thông tin về ${comboName}.\nĐây là một combo đặc biệt với nhiều món hấp dẫn.`;
+
+    container.innerHTML = '';
+    for (let i = 1; i <= 8; i++) {
+      const div = document.createElement('div');
+      div.className = 'combo-card';
+      div.style.setProperty('--delay', `${i * 0.05}s`);
+      div.innerHTML = `
+        <img src="combo${comboId}_sub${i}.jpg" alt="${comboName} - Món #${i}">
+        <h3>${comboName} - Món #${i}</h3>
+      `;
+      container.appendChild(div);
+    }
+  }
+
+function goBack() {
+  window.scrollTo(0, 0); // về đầu trang
+
+  const comboList = document.getElementById('comboList');
+  const cards = comboList.querySelectorAll('.combo-card');
+
+  // Ẩn combo trước (tạm thời)
+  cards.forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.animation = 'none';
+  });
+
+  // Hiện lại combo + gắn animation sau một chút delay (mô phỏng như load lần đầu)
+  setTimeout(() => {
+    cards.forEach((card, index) => {
+      card.style.animation = 'flyIn 0.5s ease forwards';
+      card.style.animationDelay = `${(index + 1) * 0.03}s`;
+    });
+  }, 30); // ⏱ delay nhỏ để browser reset lại DOM
+
+  comboList.classList.remove('hidden-section');
+  document.getElementById('subComboSection').style.display = 'none';
+  document.getElementById('backBtn').style.display = 'none';
+  document.getElementById('zaloInfo').style.display = 'flex';
+
+
+  const y = sessionStorage.getItem("scrollY");
+  if (y) {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, parseInt(y));
+    });
+  }
+}
+// Luôn lưu vị trí cuộn khi đang ở trang đầu
+  window.addEventListener('scroll', () => {
+    const comboList = document.getElementById('comboList');
+    if (!comboList.classList.contains('hidden-section')) {
+      sessionStorage.setItem("scrollY", window.scrollY);
+    }
+  });
+  // Hover máy tính: chỉ 1 ô to lên
+document.addEventListener('mouseover', function (e) {
+  const cards = document.querySelectorAll('.combo-list .combo-card');
+  if (window.innerWidth > 600) {
+    cards.forEach(card => card.classList.remove('active-center'));
+    if (e.target.closest('.combo-card')) {
+      e.target.closest('.combo-card').classList.add('active-center');
+    }
+  }
+});
+
+document.querySelector('.combo-list').addEventListener('mouseleave', () => {
+  const cards = document.querySelectorAll('.combo-list .combo-card');
+  cards.forEach(card => card.classList.remove('active-center'));
+});
+
+// Apple Watch hiệu ứng trên điện thoại
+if (window.innerWidth <= 600) {
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          entry.target.classList.add('active-center');
+        } else {
+          entry.target.classList.remove('active-center');
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0.5
+    }
+  );
+
+  const comboCards = document.querySelectorAll('.combo-card');
+  comboCards.forEach(card => observer.observe(card));
+}
+
+</script>
+
+
+</head>
+<body>
+  <div class="header">
+    <div id="zaloInfo" class="zalo-box">
+  <img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t39.30808-6/515494123_122135985302746256_7527177862778392645_n.jpg?stp=dst-jpg_s565x565_tt6&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH8pBztAp1jr13seFI2zsCxucuCeiInUOa5y4J6IidQ5hM8YOcnzeZCvP7Q98wjBbF_mWA_byfKa8euNmJfx2Q3&_nc_ohc=YYN9iPwNjFcQ7kNvwFu8acH&_nc_oc=Adn6S6BGrFDzahCfLvli8K5T3RWALk_F1SsBqHX9gr9Rk95XEy4FFjCBAxJxEL0GYCFVWxhoOPlsl8_tfnE4Hs0o&_nc_zt=23&_nc_ht=scontent.fsgn13-1.fna&_nc_gid=fLoSIbLA4KxmIGePsnNoFg&oh=00_AfTpchxA1jNmax2DfAjxCwEuM1R4kUHTWVJdCyPuTCUQMA&oe=6871D48A" alt="Zalo QR" class="zalo-qr" />
+  <p class="zalo-text">
+    Liên hệ Zalo: <strong>0939437111</strong><br>
+    Mọi người muốn xé túi mù thì nhắn em nha!
+  </p>
+</div>
+
+    <h1>Túi Mù - Tạp hóa Năm Thặng</h1>
+  </div>
+
+  <div class="combo-list" id="comboList">
+    <div class="combo-card" onclick="showSubCombos(1)"><img src="https://alltop.vn/backend/media/images/posts/695/Mi_Ly_Hao_Hao_Handy_huong_vi_tom_chua_cay-122363.jpg" alt="Combo 1"><h3>Mì Ly #1</h3></div>
+    <div class="combo-card" onclick="showSubCombos(2)"><img src="https://cf.shopee.vn/file/4ba1a44d44cd57eacf7bf7e67621b287" alt="Combo 2"><h3>Bim Bim #2</h3></div>
+    <div class="combo-card" onclick="showSubCombos(3)"><img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/477/947/products/thachsusodai11cay350grphucuong.jpg?v=1683798055900" alt="Combo 3"><h3>Thạch Suso #3</h3></div>
+    <div class="combo-card" onclick="showSubCombos(4)"><img src="https://lzd-img-global.slatic.net/g/p/db0781535064d6be98e07351d7c691a3.jpg_720x720q80.jpg" alt="Combo 4"><h3>Bánh hộp #4</h3></div>
+    <div class="combo-card" onclick="showSubCombos(5)"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lief5c5p9yhe61" alt="Combo 5"><h3>Nước Trái Cây Oishi #5</h3></div>
+    <div class="combo-card" onclick="showSubCombos(6)"><img src="https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/514278762_122135979350746256_446347182515465408_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEZzzyCnCTxNV6tyE5H1QiXf3DUux8LQ9V_cNS7HwtD1UR-GkDB_zxT_lEQIQWodOgDhLtk0V-QVkqZDdE7cDYa&_nc_ohc=1-FrmuFWZagQ7kNvwEo9w5x&_nc_oc=AdkTkZDvfAzYbrh782P3Yg6-mdE7HQZfe6a8Au90ZQdqi9buIoAVDO2qmHTU_WgVHaG7iAPIN3l94i_NsOAQXHXs&_nc_zt=23&_nc_ht=scontent.fsgn4-1.fna&_nc_gid=O-8OxRDiZaRDNE78mJ97Rg&oh=00_AfQ-o5qr0JVyqf59Ux_HT_6JCn7w2LSzX3yQ_0gJplWVig&oe=6871B790" alt="Combo 6"><h3>Thập cẩm #6</h3></div>
+    <div class="combo-card" onclick="showSubCombos(7)"><img src="http://hongphatfood.com/wp-content/uploads/2024/10/banh-bong-lan-cuon-kem-sua-tipo-180g0.jpg" alt="Combo 7"><h3>Bánh Bông Lan #7</h3></div>
+    <div class="combo-card" onclick="showSubCombos(8)"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lk3una1493ia5c" alt="Combo 8"><h3>Sữa Kun #8</h3></div>
+    <div class="combo-card" onclick="showSubCombos(9)"><img src="https://down-my.img.susercontent.com/file/my-11134207-7qul5-lhpt8diwu8z13b" alt="Combo 9"><h3>Bánh Donut #9</h3></div>
+    <div class="combo-card" onclick="showSubCombos(10)"><img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/383/111/products/kts-1.png?v=1594649407083" alt="Combo 10"><h3>Khoai Tây Lon #10</h3></div>
+    <div class="combo-card" onclick="showSubCombos(11)"><img src="https://toplist.vn/images/800px/mi-tom-3-mien-983366.jpg" alt="Combo 11"><h3>Mì Gói #11</h3></div>
+    <div class="combo-card" onclick="showSubCombos(12)"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lo6aiey2vqtn3e" alt="Combo 12"><h3>Bánh Que #12</h3></div>
+    <div class="combo-card" onclick="showSubCombos(13)"><img src="http://www.nguyenlieuantoan.com/assets/upload/products/1645084953_cozy-dao.jpg?v=0.0.3.1" alt="Combo 13"><h3>Trà Gói #13</h3></div>
+    <div class="combo-card" onclick="showSubCombos(14)"><img src="https://product.hstatic.net/1000301274/product/_10100996__7up_320ml_sleek_lon_0366766c074a4b538595ed8d91dc6b0d_1024x1024.png" alt="Combo 14"><h3>Nước Ngọt Lon #14</h3></div>
+    <div class="combo-card" onclick="showSubCombos(15)"><img src="https://www.nestlemilo.com.vn/sites/default/files/2024-04/MILO-hop-nhi-uong-lien.png" alt="Combo 15"><h3>Sữa Hộp #15</h3></div>
+    <div class="combo-card" onclick="showSubCombos(16)"><img src="https://cf.shopee.vn/file/04eb0d883dc2379a69fddcf4220adae8" alt="Combo 16"><h3>Nước Xả #16</h3></div>
+    <div class="combo-card" onclick="showSubCombos(17)"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lx87thl2qnyzea" alt="Combo 17"><h3>Xúc Xích #17</h3></div>
+    <div class="combo-card" onclick="showSubCombos(18)"><img src="https://suachobeyeu.vn/upload/images/sua-tuoi-tiet-trung-vinamilk-khong-duong-bich-220ml-2.jpg" alt="Combo 18"><h3>Sữa Bịch #18</h3></div>
+    <div class="combo-card" onclick="showSubCombos(19)"><img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t39.30808-6/516395575_122135979362746256_6657217895901134039_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE1MsKAGHnNxMvWbvvbsFIWRUg92qc0zN9FSD3apzTM39sR7A60occTDKD0ta4H3cxOrm6Tn9wWOJhE20tJbeNC&_nc_ohc=EyG1y2BTZ10Q7kNvwHwJp5G&_nc_oc=Adl0qAI2l7xNWvDds-NIqQQ9T_dCapHN1RZihUuTMyjM1PLsxcowhPPQDRfNTrXAz3yKUjHq2mpHxlhn8WAGBUDA&_nc_zt=23&_nc_ht=scontent.fsgn13-1.fna&_nc_gid=4KXXyC9Bq5d5jcplqsrDrg&oh=00_AfTys15iZoT6QAbfD2Qn_AWTUosC1a14zvKxRu0ChxwErA&oe=6871BD49" alt="Combo 19"><h3>Kẹo #19</h3></div>
+    <div class="combo-card" onclick="showSubCombos(20)"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsqnx0r5fvyxbf" alt="Combo 20"><h3>Chân Gà #20</h3></div>
+    <div class="combo-card" onclick="showSubCombos(21)"><img src="https://cf.shopee.vn/file/02ae89d12f4a7cf8e2643e705488f0f7" alt="Combo 21"><h3>Snack #21</h3></div>
+  </div>
+
+  <div id="subComboSection" style="display: none;">
+    <div class="info-box" id="infoBox">
+      <!-- JS chèn nội dung ở đây -->
+    </div>
+    <div class="combo-sub-list" id="subCombos"></div>
+  </div>
+
+  <div class="back-button" id="backBtn" onclick="goBack()">⬅ Quay lại</div>
+  <div style="display: none;" id="testCombo1">
+    <div style="display: none;" id="testCombo1">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Mì Ly #1 gồm các loại mì ly ăn liền tiện lợi, nhiều hương vị hấp dẫn như tôm, bò,... ăn nhanh cực tiện.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.     |    169k
+Set 2: 12 túi tặng 2.     |    338k
+Set 3: 18 túi tặng 3.     |    507k
+      Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+    <div class="combo-sub-list">
+      <div class="combo-card"><img src="https://salt.tikicdn.com/cache/w1200/media/catalog/product/8/9/8934563031930.u2409.d20160804.t121149.116366.jpg" alt="3 Miền"><h3>Modern</h3></div>
+      <div class="combo-card"><img src="https://unibenfoods.com/files/products/3-mien/mi-an-lien/tccdb-3mg-cup-noodles-blackgr.jpg" alt="Hảo Hảo"><h3>3 Miền</h3></div>
+      <div class="combo-card"><img src="https://jmarthcm.com/wp-content/uploads/2024/11/mi-ly-cung-dinh-lau-tom-chua-cay-65g.png" alt="Modern"><h3>Cung Đình Lẩu Tôm</h3></div>
+      <div class="combo-card"><img src="https://down-vn.img.susercontent.com/file/666f6089651e66efc01a364c939f864e" alt="Life Cup"><h3>Cung Đình Cua Bể</h3></div>
+      <div class="combo-card"><img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8934663190216-1-1.jpg.webp" alt="Cung Đình Chay"><h3>Life Cup</h3></div>
+      <div class="combo-card"><img src="https://product.hstatic.net/200000122283/product/i-t-c3-a2y-cung-c4-90-c3-acnh-th-e1-bb-8bt-h-e1-ba-a7m-n-e1-ba-a5m-65g_aa5deeb5304748e880f6acb46aedaf45_master.jpg" alt="Mì Ly #1 - Món #6"><h3>Cung Đình Thịt Hằm Nấm</h3></div>
+      <div class="combo-card"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lqn7kbv8681jc8" alt="Mì Ly #1 - Món #7"><h3>Cung Đình Rau Nấm</h3></div>
+      <div class="combo-card"><img src="https://acecookvietnam.vn/wp-content/uploads/2017/08/LY-TCC.png" alt="Mì Ly #1 - Món #8"><h3>Hảo Hảo</h3></div>
+    </div>
+  </div>
+  
+<div style="display: none;" id="testCombo2">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Bim Bim #2 là tổng hợp những loại snack quen thuộc như Oishi, Snack Rong Biển,... giòn rụm, đậm vị, ai cũng thích.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 10 túi tặng 2.      |   69k
+Set 2: 20 túi tặng 4.       |   138k
+Set 3: 30 túi tặng 6.       |   207k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card"><img src="https://cf.shopee.vn/file/168e11e4aadd6a5d74fb5488af1aac3b" alt="Slide Tương Ớt"><h3>Đậu Xanh</h3></div>
+    <div class="combo-card"><img src="https://product.hstatic.net/200000601239/product/snack-ca-chua-oishi-tomati-goi-39g-202203281417472641_f36054f6e97a46beb5392c57e5b0b7cb_grande.jpg" alt="Oishi Tôm Cay"><h3>Cà Chua</h3></div>
+    <div class="combo-card"><img src="https://www.sieuthiminitunjp.com/wp-content/uploads/2023/11/Bim-bim-Oishi-snack-cua-chua-ng%E1%BB%8Dt.jpeg" alt="Poca Phô Mai"><h3>Cua</h3></div>
+    <div class="combo-card"><img src="https://tse3.mm.bing.net/th/id/OIP.ApdM-YTw-Dp51UJEu9ocSgAAAA?pid=Api&P=0&h=220" alt="Swing Bơ Tỏi"><h3>Chay</h3></div>
+    <div class="combo-card"><img src="http://bizweb.dktcdn.net/thumb/grande/100/441/251/products/7860cc2b7ed1c8681ac6089c79771c36-1667890219525.jpg?v=1667890222747" alt="Slide Muối Tiêu"><h3>Slide Muối Tiêu</h3></div>
+    <div class="combo-card"><img src="https://cf.shopee.vn/file/01467a892a179e5a20d336cf99bebb57" alt="Oishi Gà Cay"><h3>Oishi Gà Cay</h3></div>
+    <div class="combo-card"><img src="https://tse4.mm.bing.net/th/id/OIP.SQkHjPvJ9Dt1DZ4YU5LQ7gHaHa?pid=Api&P=0&h=220" alt="Poca Lá Chanh"><h3>Poca Lá Chanh</h3></div>
+    <div class="combo-card"><img src="https://cf.shopee.vn/file/d9597a30a04554e769f26c95df19b52c" alt="Slide Kim Chi"><h3>Slide Kim Chi</h3></div>
+    <!-- Món phụ thứ 9 -->
+    <div class="combo-card"><img src="https://sieuthiminitunjp.com/wp-content/uploads/2023/11/Bim-bim-Oishi-snack-pho-m%C3%A1t-mi%E1%BA%BFng.jpeg" alt="Swing Kem Chua"><h3>Swing Kem Chua</h3></div>
+    <!-- Món phụ thứ 10 -->
+    <div class="combo-card"><img src="https://photos.icheckcdn.net/lmYbC7sam4bOZCJGDOfs4FfZvmsz7uqIKQMWq-hLm_8.jpg" alt="Slide Thịt Nướng"><h3>Slide Thịt Nướng</h3></div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo3">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Thạch Túi #3 gồm nhiều loại thạch trái cây mini dạng túi tiện lợi. Vị nho, dâu, táo, cam,... ngon mát và dễ thương.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 10 túi tặng 1.     |    70k
+Set 2: 20 túi tặng 2.      |    140k
+Set 3: 30 túi tặng 3.      |    210k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://scontent.fsgn24-1.fna.fbcdn.net/v/t39.30808-6/486377114_1049579490548433_3896273217691191141_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE2GRr04s4psEqjHKwUdyBeXMUw0WpcBZRcxTDRalwFlPdgDBq_gG5rt4v0xJlsE1Qh6S5hq2s0TK935O_NOk6g&_nc_ohc=rhqbaYwFtC8Q7kNvwE30-fJ&_nc_oc=AdkelXE-4AiyGCKoJSUYPzTsScfDBFl1KTy9CYAfOhJGt9DeCDUbJvGJUtKTChApwpEnXYU0jVVUh2qrzCnxLnDt&_nc_zt=23&_nc_ht=scontent.fsgn24-1.fna&_nc_gid=ozinbXD8DGJ1NqoC_xsk-A&oh=00_AfRgBCjPBafC8Jw3srtNQuEAMQnuqYIbDoE8sMp5lIYgPg&oe=6871C06C" alt="Thạch Cam">
+      <h3>Thạch Vị Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-23020-817f2rlf12nv11.webp" alt="Thạch Dâu">
+      <h3>Thạch Vị Nho</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://thucphamphucuong.com/Data/Sites/1/Product/127/z3694314047392_c0aecc9d1e110de1ada91ea46f373342.jpg" alt="Thạch Nho">
+      <h3>Thạch Vị Trân Châu Hồng Trà</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/3368/317196/bhx/keo-thach-xa-zai-zai-plus-tra-sua-tran-chau-duc-hanh-thanh-dai-giao-mau-ngau-nhien-202311171622377869.jpg" alt="Thạch Suso Mix">
+      <h3>Thạch Vị Trân Châu Matcha</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lqwyv3m5i0m1f7" alt="Thạch Xoài">
+      <h3>Thạch Vị Đào</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/3368/317196/bhx/keo-thach-xa-zai-zai-plus-tra-sua-tran-chau-duc-hanh-thanh-dai-giao-mau-ngau-nhien-202311171622380756.jpg" alt="Thạch Táo">
+      <h3>Thạch Vị Trân Châu Đường Đen</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-my.img.susercontent.com/file/801c8d478e8ab7817c51f91eaa81f673" alt="Thạch Đào">
+      <h3>Thạch Vị Taro</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo4">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Bánh Hộp #4 là những hộp bánh tiện lợi như bánh quy, bánh Cosy... đóng hộp sạch sẽ, dễ bảo quản.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.      |   199k
+Set 2: 12 túi tặng 2.      |   398k
+Set 3: 18 túi tặng 3.      |   587k
+Nguyen vong +1; bắt cặp +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000073345/product/banh_marine_boy_vi_tom_nuong_hop_35g_fb4d030edc6f4ccbb9fb7614553cc6a7_1024x1024.jpg" alt="Danisa">
+      <h3>Marine Boy</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.lottemart.vn/media/catalog/product/cache/0x0/8/9/8936036025521.jpg.webp" alt="Merie Dâu">
+      <h3>Miz</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/3359/77146/bhx/banh-que-vi-kem-la-dua-cosy-goi-126g-202309261451496323.jpg" alt="Merie Socola">
+      <h3>Cosy</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://vietnamlibra.com/images/products/2022/09/05/large/banh_quy_dua-removebg-preview_1662345082.png" alt="Merie Hạt Điều">
+      <h3>Bánh Quy Coconut</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134211-7ra0g-m8j21dx36wzrd6.webp" alt="Merie Truyền Thống">
+      <h3>Bánh Gấu</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo5">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Nước Trái Cây #5 gồm các loại nước trái cây đóng túi... bổ sung vitamin, thích hợp giải khát mỗi ngày.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.     |    99k
+Set 2: 12 túi tặng 2.     |   198k
+Set 3: 18 túi tặng 3.     |   297k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/2a8db16950a0114755fbd13f7c1db833" alt="Xoài">
+      <h3>Tea Go Vị Chanh</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/31506a6aa7f6c869cc5bff82d84d9529" alt="Nho">
+      <h3>T-Rexx Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/f5d2445b7022a33e6f62174ba872034d" alt="Dâu">
+      <h3>Sunday Táo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfl0g5h9wi2de7" alt="Táo">
+      <h3>Sunday Nho</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://lzd-img-global.slatic.net/g/ff/kf/S9e987d160ca8493da47281c18b8551b5I.jpg_360x360q75.jpg_.webp" alt="Cam">
+      <h3>Tea Go Vị Đào</h3>
+    </div>
+    <div class="combo-card">
+      <img src="file:///D:/th%E1%BB%AD/h%C3%ACnh%20%E1%BA%A3nh/n%C3%A8.png" alt="Vải">
+      <h3>T-Rexx Vàng</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo6">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Thập Cẩm #6 gồm nhiều món bất ngờ: snack, bánh, sữa, kẹo, mì,... Đa dạng, hấp dẫn, phù hợp cho những ai thích khám phá.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.      |   99k
+Set 2: 12 túi tặng 2.      |   198k
+Set 3: 18 túi tặng 3.      |   297k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://acecookvietnam.vn/wp-content/uploads/2017/08/3D-LAU-THAI-TOM_salce1-1.png" alt="Bim Bim Bơ Tỏi">
+      <h3>Mì Ly</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://thachlonghai.com.vn/FileManager/Thachlonghai/Sanpham/Thach_Rau_Cau/Thach_tui_416g/Thach-rau-cau-hoa-qua-Long-Hai-16.jpg" alt="Poca Lá Chanh">
+      <h3>Rau Câu</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/518006653_122135979812746256_8477557894391591097_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFgER36l6nLt4YN2V2O2KsyTxBtnDmjSG1PEG2cOaNIbVYxk5YfeNkr7usvc7mXBksS1GpkXQbsKAb55UHpyTLA&_nc_ohc=XAXUg_46BhoQ7kNvwH3HIH-&_nc_oc=Adkk5X5nDMc0-NBmW2ZMb5ZSFV3Xo79TkrQ75BYK679k5S956OP5Kg7MH4vjMRFCReODRfG3zIw2js-GTNQ9pTKk&_nc_zt=23&_nc_ht=scontent.fsgn4-1.fna&_nc_gid=YZ8iAmGh-8JHOGiO8GT4jg&oh=00_AfRUUcl825Rya8FvHmcYHAQ30s9zRFcYY7R4LK9oDdHFKQ&oe=6871E8F3" alt="Kẹo Dẻo">
+      <h3>Socola</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.LD0zBnp2SOhbnHFS_RYFYQHaHa?pid=Api&P=0&h=220" alt="Nước Cam">
+      <h3>Kẹo Mút</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/2565/77622/bhx/mi-hao-hao-vi-tom-chua-cay-goi-75g-202110110919568290.JPG" alt="Bánh Que">
+      <h3>Mì Gói</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://thachlonghai.com.vn/FileManager/Thachlonghai/Sanpham/Thach_sua_Chua_Natty/Natty-Collagen-300g/Thach-sua-chua-Natty-Long_Hai-bo-sung-Collagen-09.jpg" alt="Choco Pie">
+      <h3>Thạch</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-2.fna.fbcdn.net/v/t39.30808-6/516551936_122135978948746256_955348493133622414_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFc7vg-vwIFsXPdwUXkYnZ1jDpRHDse4tGMOlEcOx7i0U07O7uwh8cVLqRgtazqtlz7dI2xgNuP9GYocwuouqlI&_nc_ohc=kJiv8nOYByQQ7kNvwHPnvTl&_nc_oc=Adnnp5I2eR4WkXpl9dtvbJotike9m1BArMchGAYhtO7ILVgbqvo-jKNUhRWDx8IBC2miRLhgeq4g636xhmH37rLe&_nc_zt=23&_nc_ht=scontent.fsgn13-2.fna&_nc_gid=CZ6otD1XFYPPcMvvSYOtHg&oh=00_AfS-fC1Az2amAoe5K6dfDAirmJocfpySEfxYxZsbyzG28w&oe=6871D2FA" alt="Thạch Sữa">
+      <h3>Bánh Bông Lan</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.xuCs3DrQEBvvflcCiI1oPAHaHa?pid=Api&P=0&h=220" alt="Bánh Bông Lan">
+      <h3>Donut</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/1fafb1601a5353745e47b1cef6662d8d" alt="Snack Rong Biển">
+      <h3>Sữa Kun</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo7">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Bánh Bông Lan #7 gồm các loại bánh mềm, ngọt nhẹ như Samilk, bánh trứng,... rất tiện lợi để ăn sáng hoặc mang theo.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.     |    89k
+Set 2: 12 túi tặng 2.     |    178k
+Set 3: 18 túi tặng 3.     |    267k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-2.fna.fbcdn.net/v/t39.30808-6/516551936_122135978948746256_955348493133622414_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFc7vg-vwIFsXPdwUXkYnZ1jDpRHDse4tGMOlEcOx7i0U07O7uwh8cVLqRgtazqtlz7dI2xgNuP9GYocwuouqlI&_nc_ohc=kJiv8nOYByQQ7kNvwHPnvTl&_nc_oc=Adnnp5I2eR4WkXpl9dtvbJotike9m1BArMchGAYhtO7ILVgbqvo-jKNUhRWDx8IBC2miRLhgeq4g636xhmH37rLe&_nc_zt=23&_nc_ht=scontent.fsgn13-2.fna&_nc_gid=ZNAiTSbWbrI2mHcz5uxtRw&oh=00_AfTbZIX6jttH57R0Ekkem6jeE7nkEHZNVVNrRCKBVYpUVw&oe=6871D2FA" alt="Bánh Bông Lan Sữa">
+      <h3>Samilk</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd7zre0w6ChR3lcJkJsdGZgAqlbCKrlIJ4dZcFN1eZnifTRag76Oy8xtF7NMxkBjQsxzw&usqp=CAU" alt="Bông Lan Trứng Nhật">
+      <h3>Bông Lan Trứng Muối</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn24-2.fna.fbcdn.net/v/t39.30808-6/406793076_262149870183248_7904891587850933525_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEA1zTY65mp6wwcJ2Pai6Q6fwgpjHaw0v5_CCmMdrDS_kf1J6L8mKqZ_4kT1PLGgLsq24LjhZTH9KyTLJE0jSZq&_nc_ohc=Dj10a4lh80cQ7kNvwH5DLi8&_nc_oc=AdlfIPT22bu_6NH0duQSqJjEiSWfRf0SRBy-q9fU4L9Djehd1NyE7uLuyxxgBv_d07fPQPYbcc3P6ZDrBtp63I26&_nc_zt=23&_nc_ht=scontent.fsgn24-2.fna&_nc_gid=hK3GCM7phuyR5k5R9wjQkA&oh=00_AfTZiaC6SLyqbtoQCgRSSVzOIY5MWnxTDjsH6HCmJN2fbg&oe=6871A313" alt="Bông Lan Cuộn">
+      <h3>Today Pie</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://toplist.vn/images/800px/banh-bong-lan-solo-987353.jpg" alt="Bông Lan Socola">
+      <h3>Solo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://stat.ameba.jp/user_images/20231115/20/oog-oog/d0/97/j/o1024102315364865797.jpg?caw=800" alt="Bông Lan Phô Mai">
+      <h3>Tipo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9xUjeB0N4Yr1oQOzYh7H8mHJp5X2KSGzNZZ7V-jjDwLaSp3SmvXqxXedlyktwlZiz2RI&usqp=CAU" alt="Bông Lan Mini">
+      <h3>ChocoPN</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo8">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Sữa Kun #8 là tuyển tập các loại sữa bịch Kun nhiều hương vị: dâu, cam, ... thơm ngon, phù hợp với trẻ em và học sinh.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.      |   99k
+Set 2: 12 túi tặng 2.      |   198k
+Set 3: 18 túi tặng 3.      |   297k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://cdn2-retail-images.kiotviet.vn/2025/05/24/choxanh/a0e18b30551546a2b09c7bb8430c6d2a.jpeg" alt="Sữa Kun Dâu">
+      <h3>Kun Vị Đào</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/1fafb1601a5353745e47b1cef6662d8d" alt="Sữa Kun Socola">
+      <h3>Kem Dâu</h3>
+    </div>
+    <div class="combo-card">
+      <img src="http://minhcaumart.vn/media/com_eshop/products/8936025772139.webp" alt="Sữa Kun Cam">
+      <h3>Socola Lúa Mạch</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://salt.tikicdn.com/ts/product/11/11/0d/fa9da038927b7c626307d015a416a9cc.jpg" alt="Sữa Kun Chuối">
+      <h3>Nho</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8936025772122.jpg.webp" alt="Sữa Kun Việt Quất">
+      <h3>Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7z1xE18psLlyYFkxZwOrO-84ehK-ce19e9TSNbRJ2FItVuqCwTappNJSQG7hDDJJcAQ4&usqp=CAU" alt="Sữa Kun Nho">
+      <h3>Kun Vị Nho</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000237153/product/vn-11134207-7qukw-lg3hbhnsxibb43_dcaa8180b25f4885881fd9083a2b7771_grande.jpg" alt="Sữa Kun Nho">
+      <h3>Ổi</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo9">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Bánh Donut #9 gồm các loại bánh donut mini mềm xốp, nhiều hương vị như socola, dâu,... cực kỳ dễ thương và ngon miệng.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.     |    119k
+Set 2: 12 túi tặng 2.     |    238k
+Set 3: 18 túi tặng 3.     |    357k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/3358/170744/bhx/banh-donut-doowee-phu-socola-nhan-kem-trung-360g-5-700x467.jpg" alt="Donut Truyền Thống">
+      <h3>Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://baothymart.com/wp-content/uploads/2023/11/Banh-Donut-socola-trang.jpg" alt="Donut Chocolate">
+      <h3>Xanh Biển</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHX4L5eR7STapSK0OHiEuRjrvRao3WNb-muQaZ2YxDHqBThQbrZ6cOecvRU3N6NohwYTE&usqp=CAU" alt="Donut Nướng">
+      <h3>Hồng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/76021486da2f86ff0b064dbb409eae1d.webp" alt="Donut Nhân Kem">
+      <h3>Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134211-23020-vf7btoe11lnv08.webp" alt="Donut Dâu">
+      <h3>Vàng</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo10">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Khoai Tây Lon #10 gồm các loại snack lon giòn tan, vị đậm đà, thích hợp nhâm nhi mọi lúc.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.        | 350k
+
+Nguyen vong +1; bắt cặp +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://cdn.lottemart.vn/media/catalog/product/cache/0x0/8/9/8934680011501.jpg.webp" alt="Poca Original">
+      <h3>Nguyên bản</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8934680011488-1.jpg.webp" alt="Slide Phô Mai">
+      <h3>Thịt Nướng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://bizweb.dktcdn.net/100/299/021/products/8934680011518-1694070266411.jpg?v=1696297662403" alt="Slide Muối Tiêu">
+      <h3>Hành</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/6/1/61e0f3ea7a0bc.jpg.webp" alt="Slide Kim Chi">
+      <h3>Loại Tặng 25% Cay</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/3364/77415/bhx/snack-khoai-tay-vi-thom-cay-slide-lon-75g-202309261420162423.jpg" alt="Slide Thịt Nướng">
+      <h3>Thơm Cay</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8934680011686-1.jpg.webp" alt="Slide Sour Cream Hành">
+      <h3>Loại Tặng 25%  Phô Mai</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo11">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Mì Gói #11 là tuyển tập nhiều loại mì ăn liền từ Hảo Hảo, Omachi, Kokomi,... đủ vị cay, chua, nước và khô.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.     |     99k
+Set 2: 12 túi tặng 2.     |    198k
+Set 3: 18 túi tặng 3.     |    297k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000610047/product/3d---goi---hao-hao---tcc---yemo---copy_b5407908f54446bfb5fc0b554a588865_master.jpg" alt="Mì Gà Miliket">
+      <h3>Hảo Hảo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/2565/77669/bhx/mi-3-mien-tom-chua-cay-goi-65g-201912091503351328.jpg" alt="Mì Tôm Chua Cay">
+      <h3>3 Miền</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://tmtdistribution.com/vnt_upload/product/masan/suon_ham.jpg" alt="Hảo Hảo Tôm Chua Cay">
+      <h3>Omachi</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/7f5e1b5ef4f830808c15e706d966f262" alt="Omachi Xào Bò">
+      <h3>Kokomi</h3>
+    </div>
+    <div class="combo-card">
+      <img src="http://haiminhmart.vn/wp-content/uploads/2024/12/thung-30-goi-mi-gau-do-tom-chua-cay-63g.jpg" alt="Omachi Sườn Bò Hầm">
+      <h3>Gấu Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/2565/96215/bhx/mi-3-mien-gold-tom-chua-cay-dac-biet-goi-75g-202004171750052898.jpg" alt="3 Miền Tôm Hành">
+      <h3>3 Miền Gold</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo12">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Bánh Que #12 gồm nhiều loại bánh que giòn, vị socola, dâu,... Vừa ăn chơi, vừa thích hợp để làm quà.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.     |    99k
+Set 2: 12 túi tặng 2.     |    198k
+Set 3: 18 túi tặng 3.     |    297k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t39.30808-6/506419604_1231027185469818_8015007408459802157_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeGh1WZ2ANeGyCrCJQmrqqpFRlbGFYLGRqhGVsYVgsZGqLpXm282bQ__ImWTXfcgzTEGI8DlF3d4WxQEt0pvWsO6&_nc_ohc=USk3f03xFo4Q7kNvwF3pR-I&_nc_oc=AdmnV8LAFy1YbMCTqowytiXt45TrhVqKxIV2nD3_ggcHBGCS3LPIHaiVAY1LNB7DXe_fYYZvzX_aZW-F-wt9nja8&_nc_zt=23&_nc_ht=scontent.fsgn13-1.fna&_nc_gid=ZH2-f1Qrx8RLYZqgSnm5Ig&oh=00_AfTN-9SltlDJpwxifPhimUqa9HAVk3-nTVeMunuheAe3QQ&oe=6871D801" alt="Pocky Capuchino">
+      <h3>Vàng Đen</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn24-2.fna.fbcdn.net/v/t39.30808-6/506116331_1231027308803139_3923864100825024237_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeG7djMTsmBsEv3t3aeMABhODtki4h9kjtQO2SLiH2SO1EJhIVFLGxyakiZMVN3aXMDL1ldDvQa7G7Gt4wZDIDIV&_nc_ohc=yQvFKFavkE0Q7kNvwFBGsJK&_nc_oc=Adl0nMTp1cyM661_iBVPlYfwCDWEAWJx5GW5i7X8CkxjlxHPYqsfXPKNh08SYpXBRqhq4shMisHF0u72s1PxT3xe&_nc_zt=23&_nc_ht=scontent.fsgn24-2.fna&_nc_gid=-wwMTPcTySTycvd1OqDj4Q&oh=00_AfR_1ijXowezSpUne0_irwQuXYn9eT38QjziEFs6iQptUg&oe=6871CED9" alt="Pocky Socola">
+      <h3>Đen Trắng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn24-2.fna.fbcdn.net/v/t39.30808-6/506093709_1231027535469783_2373772864336089211_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeFICmmwOfKaKrfi376sVDzGTAeKxY7GTBlMB4rFjsZMGXG_jR4dg0q0YZB8XGLWQ-u11DW5S_M9QUzmcuTkQ0mD&_nc_ohc=4xPKRUd0VgEQ7kNvwGVCdi4&_nc_oc=AdlNst9cgbhwlnJqKY-lXA4Oeii0TpMkxdF7yIpVYHljUugtgrnLNsSRntqCSe6sTOAIVON9qQIQnDcN0YMv2YSh&_nc_zt=23&_nc_ht=scontent.fsgn24-2.fna&_nc_gid=50bT7BY5CBffD5IsQEQ6Cg&oh=00_AfTA-VeljR4YDgw6Zt6WbFxzKrTUNObEH3ODqCu6xw45BQ&oe=6871A3A0" alt="Pocky Vani">
+      <h3>Hồng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/1000089752/product/z3938636863802_64662ba981c069f448519e715e1c6240_83d9321a9df64a80b70997a3a3c812ec.jpg" alt="Pepero Almond">
+      <h3>Trà Xanh</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn3-1.fna.fbcdn.net/v/t39.30808-6/506241239_1231027425469794_8352248599927509269_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeHXYyTWaRbMYYR-jXxoaesCBu4Nz55RRnAG7g3PnlFGcFcnE4_QzNHAEJNcZmtnsiAWUwTaupjs9KuexMAHKXQ2&_nc_ohc=1j281rbXpaEQ7kNvwGBAT7z&_nc_oc=AdlpQru9XwfMApyoUJPH4ubU14wXUzBn8eTylx4As2hKgHt8IU0E-AQAILbsV44ou27YAvxgvz93R8rQyHoQGGWG&_nc_zt=23&_nc_ht=scontent.fsgn3-1.fna&_nc_gid=mDSl17oqlkElcZjD7jZs0w&oh=00_AfS0AaAWM4sSq5QHOScLS3lQzn-98dunWQAkVLtF_F8L5A&oe=6871A421" alt="Pepero Cookie & Cream">
+      <h3>Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn3-1.fna.fbcdn.net/v/t39.30808-6/506665636_1231027472136456_7554222025801802072_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeF73mgjjCBc5wsRTlaptjzjJmRzqCwkyT8mZHOoLCTJPxu5g5aRGD5AfZBv4kLU3Z7ecytDgD_AhV7ft8bkCEhW&_nc_ohc=KcXMiELrIQoQ7kNvwET7HfH&_nc_oc=AdnDZJYf5YQlSpGeH1MxkR7cfsCUcbaR0hagqmOlLy6RYBT2ylgVx9rqzAgl6fP-qmP6pj6JxqUxwQDIcdTA_6a2&_nc_zt=23&_nc_ht=scontent.fsgn3-1.fna&_nc_gid=M3ZWsUCK7kjoCCb2rx-pAw&oh=00_AfRM_M_wBG1nRBNK7UySJCHKHwpCq74SlDpV2zRzDP4H9Q&oe=6871BA22" alt="Pocky Dâu">
+      <h3>Xanh Biển</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t39.30808-6/506419604_1231027185469818_8015007408459802157_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeGh1WZ2ANeGyCrCJQmrqqpFRlbGFYLGRqhGVsYVgsZGqLpXm282bQ__ImWTXfcgzTEGI8DlF3d4WxQEt0pvWsO6&_nc_ohc=USk3f03xFo4Q7kNvwF3pR-I&_nc_oc=AdmnV8LAFy1YbMCTqowytiXt45TrhVqKxIV2nD3_ggcHBGCS3LPIHaiVAY1LNB7DXe_fYYZvzX_aZW-F-wt9nja8&_nc_zt=23&_nc_ht=scontent.fsgn13-1.fna&_nc_gid=ZH2-f1Qrx8RLYZqgSnm5Ig&oh=00_AfTN-9SltlDJpwxifPhimUqa9HAVk3-nTVeMunuheAe3QQ&oe=6871D801" alt="Pocky Dâu">
+      <h3>Cam</h3>
+    </div>
+  </div>
+  
+<div style="display: none;" id="testCombo13">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="max-width: 320px; margin: 0 auto; text-align: center; white-space: pre-line; font-size: 18px; font-weight: 500; line-height: 1.6;">
+      Combo Trà Gói #13 là bộ sưu tập trà túi lọc tiện lợi như trà dâu, trà đào,... thơm dịu và dễ pha, thích hợp để thư giãn mỗi ngày.
+    </div>
+    <div style="max-width: 320px; margin: 8px auto 0; text-align: center; white-space: pre-line; font-size: 20px; font-weight: 700; line-height: 1.7;">
+Set 1 : 6 túi tặng 1.      |   89k
+Set 2: 12 túi tặng 2.      |   178k
+Set 3: 18 túi tặng 3.      |   267k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://www.nestlemilo.com.vn/sites/default/files/2022-05/MILO_ProductResize_230522_Sachet_0.png" alt="Trà Lipton Vàng">
+      <h3>Milo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://lanchi.vn/wp-content/uploads/2021/11/NGU-COC-B039FAST-DINH-DUONG-20GOI.jpg" alt="Trà Thảo Mộc Đất Việt">
+      <h3>Ngũ Cốc Dinh Dưỡng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lktaotclk37f8e" alt="Trà Xanh Lipton">
+      <h3>Good Morning</h3>
+    </div>
+    <div class="combo-card">
+      <img src="http://bizweb.dktcdn.net/thumb/grande/100/464/672/products/cool-tea-winter-melon-s-1701935458854.png?v=1701938712113g" alt="Trà Gừng Twinings">
+      <h3>Trà Bí Đao</h3>
+    </div>
+    <div class="combo-card">
+      <img src="http://bizweb.dktcdn.net/thumb/grande/100/464/672/products/cool-tea-strawberry-stick-1701934919225.png?v=1701938667330" alt="Trà Đông Trùng Hạ Thảo">
+      <h3>Trà Dâu</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmsfuvwlkvkv15" alt="Trà Atiso Vị Sương">
+      <h3>Tea Mix</h3>
+    </div>
+        <div class="combo-card">
+      <img src="https://cozy.vn/wp-content/uploads/2023/06/355102045_253693380626666_5394256820344088431_n-600x600.jpg" alt="Trà Gừng Twinings">
+      <h3>Cozy Trà Ổi Hồng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://bizweb.dktcdn.net/100/486/168/products/tra-cozy-ice-tea-huong-chanh-hop-3.jpg?v=1721637703920" alt="Trà Đông Trùng Hạ Thảo">
+      <h3>Cozy Trà Chanh</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://bizweb.dktcdn.net/100/436/111/products/tra-cozy-ice-tea-huong-dao-hop-270g-18-goi-x-15g-202310032238312429.jpg?v=1703754696367" alt="Trà Atiso Vị Sương">
+      <h3>Cozy Trà Đào</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo14">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Nước Ngọt #14 bao gồm các loại nước ngọt lon phổ biến như Coca, Pepsi, 7Up, Mirinda,... Thơm ngon, giải khát cực đã.
+    </div>
+
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+Set 1 : 6 túi tặng 1.     |    169k
+Set 2: 12 túi tặng 2.     |    338k
+Set 3: 18 túi tặng 3.     |    507k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://cdn1.concung.com/2022/05/57522-88438/nuoc-giai-khat-mirinda-cam-lon-320ml.jpg" alt="Coca-Cola">
+      <h3>Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.rglpMNUsOWLHBOLTrxve6wHaHa?pid=Api&P=0&h=220" alt="Pepsi Không Calo">
+      <h3>Nước Yến</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000653317/product/nuoc_ngot_mirinda_huong_xa_xi_lon_320mll_5474e4d4de9d4c539a885dcdf5b12862_grande.png" alt="7Up Không Calo">
+      <h3>Xá Xị</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/1000141988/product/nuoc_ngot_pepsi_lon_320_ml_415ef91bdb15487ab3079155c3635f66.jpg" alt="Sting Vàng">
+      <h3>Pepsi</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://conut.vn/wp-content/uploads/2024/06/nuoc-ngot-mirinda-vi-soda-kem-lon-320ml-202312260859381014-1.jpg" alt="Sting Dâu Đỏ">
+      <h3>Soda Kem</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/83fcbfc4caffa440eabe0f01f1d374dd" alt="Mirinda Cam">
+      <h3>Sting Thái</h3>
+    </div>
+     </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/2443/76446/bhx/nuoc-ngot-7-up-lon-330ml-202312252102017018.jpg" alt="Mirinda Cam">
+      <h3>7 Up</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo15">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Sữa Hộp #15 là sự kết hợp nhiều loại sữa hộp thơm ngon, bổ dưỡng như sữa tươi,... phù hợp cho mọi lứa tuổi.
+    </div>
+
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+Set 1 : 6 túi tặng 1.    |    119k
+Set 2: 12 túi tặng 2.    |    238k
+Set 3: 18 túi tặng 3.    |    357k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://shopsuaanhminh.com/wp-content/uploads/2023/09/images-upload-woo2F3d82432d892758cbb3291d54b83ea1e4.jpg" alt="Vinamilk Có Đường">
+      <h3>Dâu</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://img.lazcdn.com/g/p/b201eb5cb4b61af7dc31d543de4d2817.png_720x720q80.png" alt="Vinamilk Không Đường">
+      <h3>Nho</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/400x400/8/9/8934673573399-1_5.jpg" alt="TH True Milk Không Đường">
+      <h3>Vinamilk</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lg3hbhnt34l316" alt="TH True Milk Ít Đường">
+      <h3>Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000352097/product/bot-ca-cao-milo-hop-285gr_3679fa203d0b4a4fa321f64a864179f0_1024x1024.jpg" alt="TH Socola">
+      <h3>Milo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/5c6f9c9ab6d699253783a8fc5694ba2b" alt="Mộc Châu Milk Cao Cấp">
+      <h3>Trái Cây Nhiệt Đới</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo16">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Nước Xả #16 gồm các gói nước xả vải thơm lâu, dịu nhẹ, đến từ nhiều thương hiệu quen thuộc như Comfort, Downy,... phù hợp cho cả giặt tay và giặt máy.
+    </div>
+
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+Set 1 : 10 túi tặng 2.     |    65k
+Set 2: 20 túi tặng 4.     |  130k
+Set 3: 30 túi tặng 6.     | 195k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu7ciprnbhn586" alt="Comfort Đam Mê">
+      <h3>Thiên Nhiên</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfqpub37u6pw1b.webp" alt="Comfort Thư Giãn">
+      <h3>Hương Ban Mai</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfqpub37eqh037.webp" alt="Comfort Say Đắm">
+      <h3>Hương Nước Hoa</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/2465/81700/bhx/10-goi-nuoc-xa-vai-dam-dac-comfort-mot-lan-xa-huong-gio-xuan-20ml-202208040956205112.jpg" alt="Comfort Mê Mê">
+      <h3>Hương Gió Xuân</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://bizweb.dktcdn.net/thumb/medium/100/294/198/products/quyen-ru-1749834631980.jpg?v=1749834635060" alt="Comfort Hoa Anh Đào">
+      <h3>Hương Quyến Rũ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/3023/193736/bhx/nuoc-xa-cho-be-comfort-voi-cong-thuc-rieng-diu-nhe-cho-da-nhay-cam-10-goix20ml-202407091448459704.jpg" alt="Comfort Cảm Xúc">
+      <h3>Thơm Hương Phấn</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUiOELBl0_xgaCS03KEoEG-mQpEQ3HDW2_5XuqN2rrCRmf3hnMhDTRme_xeENvffudI98&usqp=CAU" alt="Comfort Tươi Đẹp">
+      <h3>Huyền Bí</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/1000288770/product/wny_parfum_collection_dam_me_goi_20ml_12c4b0264ef14fe4801fc86c773b67bf_8fb3c313d6f9444ba52abd6707511288_master.jpg" alt="Comfort Ban Ngày">
+      <h3>Đam Mê</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltc65i4pbpvo9d" alt="Comfort Ban Đêm">
+      <h3>Hương Nắng Mai</h3>
+
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo17">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Xúc Xích #17 là sự kết hợp của nhiều loại xúc xích dai ngon, tiện lợi, phù hợp cho bữa ăn nhanh hoặc mang theo đi học, đi chơi.
+    </div>
+
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+Set 1 : 6 túi tặng 1.      |   199k
+Nguyen vong +1; bắt cặp +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://minhcaumart.vn/media/com_eshop/products/8936034876392.webp" alt="Vedan Đức">
+      <h3>Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://pvmarthanoi.com.vn/wp-content/uploads/2023/06/xuc-xich-lac-pho-mai-bap-bo-heo-cao-boi-hop-64g-201908050951527098-500x600.jpg" alt="Vedan Phần Lan">
+      <h3>Xanh Lá</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/477/947/products/inh-web-thitheoga-500x500-0000s-1677643192184.jpg?v=1677643195247" alt="Vissan Đài Loan">
+      <h3>Tím</h3>
+    </div>
+    <div class="combo-card">
+      <img src="http://bizweb.dktcdn.net/thumb/grande/100/424/666/products/4fc0be71-039c-4ce3-8a87-3ecc76bdd5f6.jpg?v=1654411974663" alt="Vissan Đức">
+      <h3>Vàng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8936034876422-1_2.jpg.webp" alt="Vedan Phô Mai">
+      <h3>Hồng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://hntmart.vn/wp-content/uploads/2021/08/DC25C123-4A66-445D-BE9C-BE157E5D9C43.jpeg" alt="Vissan Phô Mai">
+      <h3>Cam</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo18">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Sữa Bịch #18 gồm các loại sữa bịch thơm ngon, giàu dinh dưỡng, được chọn lọc từ nhiều thương hiệu quen thuộc với học sinh và sinh viên.
+    </div>
+
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+Set 1 : 6 túi tặng 1.      |   169k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://suachobeyeu.vn/upload/images/combo-sua-vinamilk-dinh-duong-khong-duong-bich-220ml-3.jpg" alt="TH Có đường">
+      <h3>Không Đường</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://suachobeyeu.vn/upload/images/combo-sua-vinamilk-dinh-duong-huong-dau-bich-220ml-3.jpg" alt="TH Ít đường">
+      <h3>Dâu</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.lottemart.vn/media/description/product/cache/8934673500357-DT-1.jpg.webp" alt="TH Không đường">
+      <h3>Có Đường</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://baothymart.com/wp-content/uploads/2023/11/Milo-bit-180ml.png" alt="Dalat Milk Có Đường">
+      <h3>Milo</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.dutchlady.com.vn/sites/default/files/2023-05/FINO%20SWEET%20210ML_6.png" alt="Dalat Milk Không Đường">
+      <h3>Dutch Lady</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cdn.tgdd.vn/Products/Images/2943/86167/bhx/thung-40-bich-sua-dau-nanh-nguyen-chat-fami-200ml-202408171416412639.jpg" alt="Milk Planet Ít Đường">
+      <h3>Fami</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo19">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Kẹo #19 là bộ sưu tập những loại kẹo hấp dẫn: kẹo dẻo, kẹo viên, kẹo trái cây,... cực kỳ đa dạng, phù hợp mọi lứa tuổi.
+    </div>
+
+    <div style="
+      max-width: 320px;
+      margin: 20px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.8;
+    ">
+Set 1 : 10 túi tặng 1.       |  59k
+Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://sieuthiminitunjp.com/wp-content/uploads/2021/02/K%E1%BA%B9o-d%E1%BA%BBo-B%E1%BA%AFp-Vi%E1%BB%87t.jpg" alt="Kẹo trái cây Nhật">
+      <h3>Bắp</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-2.fna.fbcdn.net/v/t39.30808-6/515813475_122135979728746256_5804391769186677746_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE_NTvlicxXxqdZaHyD326GYzv1xwCWBnFjO_XHAJYGcTCd-uPmdqK-Nl9uIdOgP3MOdgI9zy2nzGIrQG80VEx2&_nc_ohc=0afggVID43gQ7kNvwErkS7o&_nc_oc=AdmlltoIwc4qc8k2CWM6LIcfBU6nxI4iuBoKgjc2_qWirzTQqPC2HIC67Wpcd0EzRQu7wpl_QuMpUeu5IZA4OFuS&_nc_zt=23&_nc_ht=scontent.fsgn13-2.fna&_nc_gid=TN3OmNVNSWhjmPav_3i1_A&oh=00_AfS7-Xlg52qr-JZ_jKVzO22kQkFC5TpEO4iuVtcG63ONqw&oe=6871CAA8" alt="Kẹo Mix">
+      <h3>Trái Cây</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn24-2.fna.fbcdn.net/v/t39.30808-6/518058694_122135979752746256_7913256279777932415_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGymEgZYpTcG0IuxbSlJ8rSmOmwL-m2cvKY6bAv6bZy8lQsBYBAQ-l4vKHMmUu5IfeDSZTqQYmOz-djk7TxF7gC&_nc_ohc=jVGNHy6UoQsQ7kNvwEydlIv&_nc_oc=Adkcit3y5R5R88Cteuat3NU3pdDRh0HP1aAzJ2r_kCdCgpo6OMz3pmPeNgAmKSrpiZacCZ5a4alZdk0aVT57Vase&_nc_zt=23&_nc_ht=scontent.fsgn24-2.fna&_nc_gid=cpDSbNBsrmwx_tFWfOrLUA&oh=00_AfTv93L6-cevAhuhZH0SPljm9qGETisxk-SmaNZIlWWZfg&oe=6871BED9" alt="Kẹo nhân thạch">
+      <h3>Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://sg-live-01.slatic.net/p/81bc36ca8b9adc23e10279c765c54c0a.jpg_525x525q80.jpg" alt="Kẹo nhân thạch nho">
+      <h3>Kẹo Cafe</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t39.30808-6/516889012_122135979842746256_3437884529990679835_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEMLf_2QxkGShKoaf0ac4wt1ME8jXPq5jLUwTyNc-rmMrxouSijkEJdhDc_O9wt068vST3wk8U_MAnwdXH8aPOm&_nc_ohc=nMrYuknV5gsQ7kNvwEAgTfN&_nc_oc=Adk4K3ZrW3qGTr3C_PuYdNUQgOweJXfh46HGS8w0xz2YZb0YngHRkxjHbDP5EX95SnDJOTbytcbU1jNLrwELf0oL&_nc_zt=23&_nc_ht=scontent.fsgn13-1.fna&_nc_gid=70BzJtl2P3H7UF3M4yKLpg&oh=00_AfRD7iIvEFELSaw9A3dFPCWmaKPT1R54Awo3kDNmSWp-yw&oe=6871E002" alt="Kẹo trà xanh">
+      <h3>Dâu Tây</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/518006653_122135979812746256_8477557894391591097_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFgER36l6nLt4YN2V2O2KsyTxBtnDmjSG1PEG2cOaNIbVYxk5YfeNkr7usvc7mXBksS1GpkXQbsKAb55UHpyTLA&_nc_ohc=XAXUg_46BhoQ7kNvwH3HIH-&_nc_oc=Adkk5X5nDMc0-NBmW2ZMb5ZSFV3Xo79TkrQ75BYK679k5S956OP5Kg7MH4vjMRFCReODRfG3zIw2js-GTNQ9pTKk&_nc_zt=23&_nc_ht=scontent.fsgn4-1.fna&_nc_gid=4SsaPeySxoyL909vBEpPQQ&oh=00_AfSD3SaZS4SXko9bHISqrV1ZUHlc8VSOSYdlH2vF2uGeAg&oe=6871B0B3" alt="Kẹo nho Milky">
+      <h3>Socola</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t39.30808-6/515439639_122135979890746256_5762962735106021377_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGKVyzIyYA-hXb4IIj7Nf3CRXFimwEpbhZFcWKbASluFt0GCXE6hslpX4jDr-tMd_fBSWDWFtm7KtMWb8uFUcCP&_nc_ohc=mFmcrVDFWQ0Q7kNvwEwPswO&_nc_oc=AdlIfYYy7lbmgh2-BzFOYh2pH0FSvXAXKucaZz0MiDXwTltkUiI17-lOcGsIClze-_mkEqHFBlPC1GRHZyG-PNNh&_nc_zt=23&_nc_ht=scontent.fsgn13-1.fna&_nc_gid=h7jvqMl6r92FU9inNkKhJw&oh=00_AfQaQw6eePBys6x8en2o5E0tlU2LyOfimzmfE9BOsFcnhw&oe=6871CBE5" alt="Kẹo dưa hấu">
+      <h3>Kẹo Hàn Quốc</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://pngimg.com/uploads/chupa_chups/chupa_chups_PNG20.png" alt="Kẹo dẻo">
+      <h3>Kẹo Mút</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.Cz67VbQgQVVkONncFsL8tAAAAA?pid=Api&P=0&h=220" alt="Kẹo socola M&M">
+      <h3>Kẹo Sữa</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://cf.shopee.vn/file/d4ae4081c347fad269d57c2de8d95cda" alt="Kẹo socola M&M">
+      <h3>Bạc Hà</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo20">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    
+    <!-- Mô tả -->
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Chân Gà #20 là tuyển tập chân gà giòn dai, chua cay đậm vị – cực hợp để lai rai hoặc chia sẻ cùng bạn bè.
+    </div>
+
+    <!-- Giá -->
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+      Set 1: 6 túi tặng 1.     |   139k  
+      Set 2: 12 túi tặng 2.    |   278k  
+      Set 3: 18 túi tặng 3.    |   556k  
+      Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+
+  </div>
+
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà sả tắc">
+      <h3>Đỏ ( Dán Giấy Màu )</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà ngâm ớt">
+      <h3>Xanh Biển ( Dán Giấy Màu )</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà cay Thái">
+      <h3>Hồng ( Dán Giấy Màu )</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà sốt me">
+      <h3>Vàng ( Dán Giấy Màu )</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà xì dầu">
+      <h3>Tím ( Dán Giấy Màu )</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà tắm mắm">
+      <h3>Xanh Lá ( Dán Giấy Màu )</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyydsk8z538h2b" alt="Chân gà nướng muối ớt">
+      <h3>Cam ( Dán Giấy Màu )</h3>
+    </div>
+  </div>
+</div>
+
+<div style="display: none;" id="testCombo21">
+  <div class="info-box" style="padding: 0; background: none; box-shadow: none; border-radius: 0;">
+    
+    <!-- Phần mô tả -->
+    <div style="
+      max-width: 320px;
+      margin: 0 auto;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    ">
+      Combo Snack #21 là tuyển tập các loại snack giòn tan.  
+      Nhiều hương vị hấp dẫn như rong biển, phô mai, tôm cay,...  
+      Thích hợp cho mọi độ tuổi.  
+    </div>
+
+    <!-- Phần giá -->
+    <div style="
+      max-width: 320px;
+      margin: 8px auto 0;
+      text-align: center;
+      white-space: pre-line;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.7;
+    ">
+      Set 1: 10 túi tặng 2.     |    219k  
+      Set 2: 20 túi tặng 4.     |    438k  
+      Set 3: 30 túi tặng 6.     |    657k  
+      Nguyen vong +1; bắt cặp +1; dọn bàn +1
+    </div>
+
+  </div>
+  <div class="combo-sub-list">
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000077081/product/screenshot_54_7897e6a423424d2eaca48c4445a5d087_1024x1024.png" alt="Snack Rong biển cay">
+      <h3>Mật Ong</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://storage.googleapis.com/mm-online-bucket/ecommerce-website/uploads/media/384234.jpg" alt="Snack bắp gà quay">
+      <h3>Tự Nhiên</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/1000288770/product/banh_snack_khoai_tay_orion_o_star_vi_tao_bien_goi_63g_5885eb9e80d14e4d914e0efde8021240_master.jpg" alt="Snack hải sản">
+      <h3>Tảo Biển</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://orion.vn/media/olqnzxjx/63g_swing-mockup-2.png" alt="Snack lươn nướng">
+      <h3>Thịt Nướng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://orion.vn/media/4creypfw/z3096562132873_4919b198c38295ce7eaa0387ccdf7190-removebg-preview.png" alt="Snack lạp xưởng">
+      <h3>Toonies Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://product.hstatic.net/200000495609/product/h-snack-toonies-du-vi-goi-nho-va-goi-lon-banh-keo-an-vat-imnuts-new-02_e6bd3ca200c343dab7fb53b7e116e494_master.jpg" alt="Snack phô mai">
+      <h3>Toonies Cam</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8936036025576-1.jpg.webp" alt="Snack thịt nướng">
+      <h3>Maxx Thịt Nướng</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://jmarket.vn/wp-content/uploads/2023/09/7b963138220c49ca894bec3908f75bfe.png" alt="Snack cay Hàn">
+      <h3>O'Star Đỏ</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://orion.vn/media/nm3hrn1q/otars-mockup-normal.png" alt="Snack lá chanh">
+      <h3>Trứng Muối</h3>
+    </div>
+    <div class="combo-card">
+      <img src="https://down-vn.img.susercontent.com/file/c039be946e625ea08c06b477f3f21be7_tn" alt="Snack tôm cay">
+      <h3>Toonies Xanh Lá</h3>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
